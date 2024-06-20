@@ -27,9 +27,9 @@ def login():
         if name == decrypt_name.decode() and pwd == decrypt_password.decode():
             return jsonify({'msg':'successfully login!','status':200})
         elif name != decrypt_name.decode() and pwd != decrypt_password.decode():
-            return jsonify({'msg':'Invalid username and password','status':200})
+            return jsonify({'msg':'Invalid username and password','status':500})
         elif pwd != decrypt_password.decode():
-            return jsonify({'msg':'Invalid password','status':200})
+            return jsonify({'msg':'Invalid password','status':500})
         else :
             return jsonify({'msg':'Invalid username','status':500})
     except Exception as e:
