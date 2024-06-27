@@ -29,7 +29,7 @@ class process:
         columns = self.dict_keys()
         y_columns = 185
         x_columns = 15
-        pdf = Canvas("chalan.pdf",pagesize=(5 * inch, 7 * inch))    #inch is use to convert in point multiple 72 for 1 inch to point, 1 inch =72 points in pdf.
+        pdf = Canvas("axy.pdf",pagesize=(5 * inch, 7 * inch))    #inch is use to convert in point multiple 72 for 1 inch to point, 1 inch =72 points in pdf.
         pdf.drawInlineImage(self.vehicle_image_path,35,320)
         pdf.drawInlineImage(self.number_plate_path,55,260)
         pdf.setFont("Courier-Bold",16)
