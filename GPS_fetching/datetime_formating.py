@@ -30,7 +30,7 @@ def date_formating(date_time):
         ist_diff = timedelta(hours=5, minutes=30)
         ist_time = utc_time+ist_diff
         time = str(ist_time).split(' ')
-        time = time[1]
+        time = time(time[1])
         # print(time)
         # print(type(ist_time))
         # print(ist_time)

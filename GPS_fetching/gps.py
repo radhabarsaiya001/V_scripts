@@ -21,7 +21,9 @@ class GPS:
                     # print(data)
                     new_data = data.split(',')
                     # print(new_data)
-                    if '$GPGGA' in new_data:
+                    if new_data[2] =="" or new_data[3] =="":
+                        print("Loading.............")
+                    elif '$GPGGA' in new_data:
                         # print(data)
                         time = new_data[1].split('.')
                         time = time[0]
@@ -87,6 +89,9 @@ class GPS:
 
             except UnicodeDecodeError:
                 pass
+
+            # except :
+
 
             except Exception as e:
                 # return f"{e}"
