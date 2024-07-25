@@ -24,3 +24,26 @@ def plot(img_path, record_id, speed, speed_zone, distance, direction, veh_type, 
     alpha = 0.7
     final = cv2.addWeighted(borderd_img,alpha,overlay,1-alpha,0 )
     cv2.imwrite("plot_image_output.png",final)
+
+
+# sample data for api call
+# {
+#   "img": "C:\\Users\\hp\\Downloads\\Vinayan_New\\Images_ploting\\original_image.png",
+#   "record_id": 167803,
+#   "speed": "87km/h",
+#   "speed_zone": "70km/h",
+#   "distance": "457.89 M",
+#   "direction": "Receding",
+#   "veh_type": "CAR",
+#   "veh_no": "DL9087",
+#   "veh_ctg": "Private",
+#   "violation": "Overspeeding , No Helmet, triple riding, no seatbelt, fency no. plate",
+#   "operator_name": "Vinayan",
+#   "op_id": 6789,
+#   "lat": 23.675699,
+#   "long": 77.8795645,
+#   "col_b":0,
+#   "col_g":199,
+#   "col_r":255,
+#   "loc":"Delhi"
+# }
