@@ -1,61 +1,28 @@
 from onvif import ONVIFCamera
-
 path = r"C:\Users\hp\miniconda3\Lib\site-packages\onvif_zeep-0.2.12-py3.11.egg\Lib\site-packages\wsdl"
-mycam = ONVIFCamera('192.168.1.63', 80, 'admin', 'vinayan@123',path)
-
-# # Get the Network interface service
-net_service = mycam.create_devicemgmt_service()
-
-# # Get the network interfaces
-interfaces = net_service.GetNetworkInterfaces()
-print(interfaces)
-interface_token = interfaces[0].token
-# print(interface_token)
-
-
-# # # New IP configuration
-new_ip_address = '192.168.1.63'
-new_netmask = '255.255.255.0'
+mycam = ONVIFCamera('192.168.1.69', 80, 'admin', 'vinayan@123',path)
+new_ip_address = '192.168.1.64'
+new_netmask = 24
 new_gateway = '192.168.1.1'
+def network_setting(new_ip_address,new_netmask, new_gateway):
+    devicemgmt = mycam.create_devicemgmt_service()
+    network_interfaces = devicemgmt.GetNetworkInterfaces()
+    # print(network_interfaces)
+    interface_token = network_interfaces[0].token
 
-# Set the new IP address
-# response = net_service.SetIPAddress(
-#     {
-#         'InterfaceToken': interface_token,
-#         'NetworkInterface': {
-#             'IPv4': {
-#                 'Enabled': True,
-#                 'Manual': {
-#                     'Address': new_ip_address,
-#                     'PrefixLength': 24
-#                 },
-#                 'DHCP': False
-#             },
-#             'IPv6': {
-#                 'Enabled': False
-#             }
-#         }
-#     }
-# )
+    # Create a network interface configuration
+    interface_config = devicemgmt.create_type('SetNetworkInterfaces')
+    interface_config.InterfaceToken = interface_token
+    interface_config.NetworkInterface = {
+        'IPv4': {
+            'Enabled': True,
+            'Manual': [{'Address': new_ip_address, 'PrefixLength': new_netmask}],
+            'DHCP': False
+        }
+    }
+    response = devicemgmt.SetNetworkInterfaces(interface_config)
+    # print(f"SetNetworkInterfaces response: {response}")
+    print("Successfully Ip updated")
 
-# if response:
-#     print(f"IP address of the camera has been changed to {new_ip_address}")
-
-# # # # Update the network interface configuration
-# # net_service.SetNetworkInterfaces({
-# #     'InterfaceToken': interface_token,
-# #     'NetworkInterface': {
-# #         'IPv4': ip_settings,
-# #         'IPv6': {
-# #             'Enabled': False
-# #         }
-# #     }
-# # })
-
-# # # # Set the default gateway
-# # # net_service.SetNetworkDefaultGateway({
-# # #     'IPv4Address': new_gateway
-# # # })
-
-# # # print(f"IP address of the camera has been changed to {new_ip_address}")
+network_setting(new_ip_address,new_netmask, new_gateway)
 
