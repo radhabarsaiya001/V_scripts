@@ -5,43 +5,36 @@ from Database import database_model
 
 db = database_model()
 db.create_table()
-# db.delete_table()
-def id_validation(dir_name):
+def id_validation(dir_name,faceid,facename):
     try:
         emty = []
-        face_id = input("Enter user id: ")
-        name = input("Enter you Good Name:")
         if os.path.exists(dir_name):
             existing_id= os.listdir(dir_name)
-
             for ids in existing_id:
                 ids = ids.split('.')[1]
                 emty.append(ids)
-                emty = list(set(emty))
-            # print("It's empty>>>>>>>>>>",emty)
-            if face_id in emty:
-                return str("The Id is registered, please you another ID !!")
+                emty = list(set(emty))            
+            if str(faceid) not in emty:
+                db.insert_data(str(faceid),facename)
+                return faceid
             else:
-                db.insert_data(face_id,name)
-                return face_id
+                return str("The Id is registered, please you another ID !!")
         else:
             return "DataSet Path is not Exist......"
     except Exception as e:
         return e
-
-def register():
+    
+def register(faceid,name):
     dir_name = "DataSet"
     if not os.path.exists(dir_name):
-        os.makedirs(dir_name)
-        
+        os.makedirs(dir_name)        
     try:
-        face_id = id_validation(dir_name)
+        face_id = id_validation(dir_name,faceid,name)
         if face_id != "The Id is registered, please you another ID !!":
-            print("Thanks for register in wonderful FRS Application!!")
-            data_register(dir_name,face_id) 
+            data_register(dir_name,faceid) 
+            return "Thanks for register in wonderful FRS Application!!"
         else :
             return "The Id is registered, please you another ID !!"
-        # print(face_id)
     except Exception as e:
         return e
     
@@ -80,7 +73,3 @@ def data_register(dir_name, face_id):
     print("\n [INFO] Exiting Program and cleanup stuff")
     cam.release()
     cv2.destroyAllWindows()
-
-register()
-# print(obj)
-

@@ -1,7 +1,7 @@
 import sqlite3
 class database_model:
     def __init__(self):
-        self.con = sqlite3.connect("Face_Recognition_DataBase.db")
+        self.con = sqlite3.connect("Face_Recognition_DataBase.db",check_same_thread=False)
         self.cur = self.con.cursor()
     
     def create_table(self):
@@ -23,12 +23,7 @@ class database_model:
         self.cur.execute("select name from face_tb where id = ?", (id,))
         data = self.cur.fetchone()
         return data[0]
-        # self.cur.execute("select * from face_tb ")
-        # data = self.cur.fetchone()
-        # return data[0]
-
-        # print(data[0])
 
 # obj = database_model()
-# print(obj.get_data(str(34)))
+# print(obj.get_data(23))
 
