@@ -1,7 +1,7 @@
 import cv2
 import multiprocessing
 import queue
-from mtcnn import MTCNN
+from mtcnn_ort import MTCNN
 
 # Initialize the MTCNN detector
 detector = MTCNN()
@@ -31,6 +31,8 @@ def process_frame(frame_queue):
 
 def capture_frames(rtsp_url, frame_queue):
     cap = cv2.VideoCapture(rtsp_url)
+    # fps = cap.get(cv2.CAP_PROP_FPS)
+    # print(fps)
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -38,7 +40,7 @@ def capture_frames(rtsp_url, frame_queue):
             break
 
         # Resize the frame to reduce processing load
-        frame = cv2.resize(frame, (640, 480))
+        frame = cv2.resize(frame, (1280,720))
 
         # Add the frame to the queue
         if not frame_queue.full():
@@ -51,7 +53,7 @@ def main():
     rtsp_url = "rtsp://admin:vinayan@123@192.168.1.64:554/1/1"
     
     # Create a multiprocessing queue
-    frame_queue = multiprocessing.Queue(maxsize=5)
+    frame_queue = multiprocessing.Queue(maxsize=1)
 
     # Start the frame capture process
     capture_process = multiprocessing.Process(target=capture_frames, args=(rtsp_url, frame_queue))

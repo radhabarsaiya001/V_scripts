@@ -1,17 +1,20 @@
-from mtcnn import MTCNN
+from mtcnn_ort import MTCNN
 import cv2
+import time
 
 # initialize the MTCNN detector
 detector = MTCNN()
-video_path = "rtsp://admin:vinayan@123@192.168.1.64:554/1/1"
-cap = cv2.VideoCapture(video_path)
+# video_path = "rtsp://admin:vinayan@123@192.168.1.64:554/1/1"
+cap = cv2.VideoCapture(0)
 while True:
     try:
         # read the frame from the camera
         ret, frame = cap.read()
-        frame = cv2.resize(frame, (640, 480))
+        # frame = cv2.resize(frame, (640, 480))
         # detect faces using MTCNN
         faces = detector.detect_faces(frame)
+        print(faces)
+        time.sleep(3)
 
         # draw bounding boxes around the faces
         for face in faces:
