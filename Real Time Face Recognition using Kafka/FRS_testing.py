@@ -1,25 +1,29 @@
 import joblib
-import numpy as np
+from numpy import load
 from numpy import expand_dims
 from facenet_embedding_extraction import extract_embaddings
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, Normalizer
+from face_classification_model import classifing_model
 from Face_Registration import extract_faces
 frs_model = joblib.load('optimized_face_model.pkl')
 label_encoder = joblib.load('optimized_label_encoder.pkl')
+data = load('face_embeddings_wth_labels.npz')
+cnt = 0
+def get_training_embaddeing(frame_path):
+    global cnt
+    sample_embedding, predicting_class = classifing_model(frame_path)
+    for i in data['arr_1']:
+        if i == predicting_class[0]:
+            print(cnt)
+            break
+        cnt+=1
+    return sample_embedding
 
-# frame_path = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data\elon_1.jpg"
-# frame_path = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data\WhatsApp Image 2024-09-24 at 11.30.27.jpeg"
-frame_path = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data\bezos.jpeg"
-face_arr = extract_faces(frame_path)
-face_embadding = extract_embaddings(face_arr)
+frame_path = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\testing_data\unknown_2.jpeg"
+sample_embedding = get_training_embaddeing(frame_path)
 
-samples = expand_dims(face_embadding, axis=0)
-yhat_class = frs_model.predict(samples)
-yhat_prob = frs_model.predict_proba(samples)
-label_name = label_encoder.inverse_transform(yhat_class)
-class_index = yhat_class[0]
-class_probability = 100 - (yhat_prob[0,class_index] *100)
-print(yhat_class)
-print(yhat_prob)
-print(label_name)
-print(class_probability)
+training_embedding = data['arr_0'][cnt][:]
+print(training_embedding)
+
+
+similarity check function

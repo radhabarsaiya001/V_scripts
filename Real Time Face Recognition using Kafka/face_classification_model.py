@@ -1,44 +1,38 @@
 from numpy import load
 from sklearn.preprocessing import LabelEncoder, Normalizer
 from sklearn.svm import SVC
-from sklearn.model_selection import GridSearchCV, cross_val_score
-from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
 import joblib
 import matplotlib.pyplot as plt
-
-# Load the dataset
+from Face_Registration import extract_faces
+from facenet_embedding_extraction import extract_embaddings
+from numpy import expand_dims
 data = load('face_embeddings_wth_labels.npz')
 train_x = data['arr_0']
 train_y = data['arr_1']
 
-# Normalize the input vectors (train_x)
-# normalizer = Normalizer(norm='l2')
-# train_x = normalizer.fit_transform(train_x)
 
-# Encode the labels
 label_encoder = LabelEncoder()
 train_y = label_encoder.fit_transform(train_y)
 
-# Create the SVC model
+# # Create the SVC model
+
 svc_model = SVC(kernel='linear', probability=True)
 svc_model.fit(train_x, train_y)
 
-# Predict on training data
-train_y_pred = svc_model.predict(train_x)
+def classifing_model(frame_path):
+    face_arr = extract_faces(frame_path)
+    face_embadding = extract_embaddings(face_arr)
+    samples = expand_dims(face_embadding, axis=0)
+    train_y_pred = svc_model.predict(samples)
+    label_name = label_encoder.inverse_transform(train_y_pred)
+    return samples, label_name
 
-# Evaluate accuracy
-# accuracy = accuracy_score(train_y, train_y_pred)
-# print(f"Training Accuracy: {accuracy:.2f}")
 
-# Print classification report
-# print(classification_report(train_y, train_y_pred))
+# frame_path = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\testing_data\radha.jpeg"
+# print(classifing_model(frame_path))
 
-# Display confusion matrix
 
-# ConfusionMatrixDisplay.from_estimator(svc_model, train_x, train_y)
-# plt.show()
 
 # Save the optimized model and label encoder
-joblib.dump(svc_model, 'optimized_face_model.pkl')
-joblib.dump(label_encoder, 'optimized_label_encoder.pkl')
-# joblib.dump(normalizer, 'normalizer.pkl')
+# joblib.dump(svc_model, 'optimized_face_model.pkl')
+# joblib.dump(label_encoder, 'optimized_label_encoder.pkl')

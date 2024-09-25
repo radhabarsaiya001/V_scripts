@@ -37,10 +37,10 @@ def load_dataset(data_dir):
     return asarray(faces), asarray(labels)
 
 
-data_dir= r'C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data'
-faces, labels = load_dataset(data_dir=data_dir)
+# data_dir= r'C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data'
+# faces, labels = load_dataset(data_dir=data_dir)
 
-savez_compressed('training_data.npz',faces, labels)
+# savez_compressed('training_data.npz',faces, labels)
 
 
 
