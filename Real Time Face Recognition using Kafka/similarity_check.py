@@ -20,14 +20,21 @@ def similarity_check(data_dir,unknown_embadding):
     return lst
 
 
-data_dir = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data"
+# data_dir = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data"
 
-unkown_img = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\testing_data\unknown_2.jpeg"
+unkown_img = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\testing_data\radha.jpeg"
 unkown_img_arr= extract_faces(unkown_img)
 unknown_embadding = expand_dims(extract_embaddings(unkown_img_arr),axis=0)
-print(similarity_check(data_dir,unknown_embadding))
+# print(similarity_check(data_dir,unknown_embadding))
 
 
+
+
+file_path = r"C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\testing_data\radha_an.jpeg"
+face_arr = extract_faces(file_path)
+face_embadding = expand_dims(extract_embaddings(face_arr),axis=0)
+similarity_score =cosine_similarity(face_embadding,unknown_embadding)
+print(f"{similarity_score[0][0]*100} %")
 
 
 

@@ -40,7 +40,7 @@ def capture_frames(rtsp_url, frame_queue):
             break
 
         # Resize the frame to reduce processing load
-        frame = cv2.resize(frame, (1280,720))
+        # frame = cv2.resize(frame, (1280,720))
 
         # Add the frame to the queue
         if not frame_queue.full():

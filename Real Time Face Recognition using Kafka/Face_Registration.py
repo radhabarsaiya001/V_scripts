@@ -1,3 +1,5 @@
+# *************************training_on_large_dataset_at_a_time*************************
+
 from mtcnn_ort import MTCNN
 import cv2
 import time
@@ -41,25 +43,4 @@ def load_dataset(data_dir):
 # faces, labels = load_dataset(data_dir=data_dir)
 
 # savez_compressed('training_data.npz',faces, labels)
-
-
-
-
-
-
-
-# img = cv2.imread(r'C:\Users\hp\Downloads\Vinayan_New\Real Time Face Recognition using Kafka\Data\radha_vinayan.jpg')
-# img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-# faces = detector.detect_faces(img)
-
-# # Draw bounding boxes around detected faces
-# for face in faces:
-#     x, y, w, h = face['box']
-#     img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#     img = img[y:y+h, x:x+w]
-#     img = cv2.resize(img, (160,160))
-
-# cv2.imshow("img",img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
 
